@@ -4,9 +4,9 @@ const gameBoard = (() => {
     'strict mode';
 
     const _board = [
-        ['X', 'X', 'X'],
-        ['X', 'X', 'X'],
-        ['', 'O', 'X']
+        ['O', 'X', 'X'],
+        ['X', 'X', 'O'],
+        ['O', 'X', 'X']
     ];
     const _threeInARow = (mark) => {
         let win = false;
@@ -56,7 +56,22 @@ const gameBoard = (() => {
         } else if (_threeInADiag(mark)) {
             return true;
         }
-    }
+    };
+    const checkTie = () => {
+        let tie = true;
+
+        _board.forEach(row => {
+            if (row.some(mark => mark === '') ||
+                _threeInARow('X') || _threeInARow('O') ||
+                _threeInACol('X') || _threeInACol('O') ||
+                _threeInADiag('X') || _threeInADiag('O')) {
+                tie = false;
+                return;
+            }
+        });
+
+        return tie;
+    };
 
     document.addEventListener('click', function(e) {
         if (!e.target.textContent) {
@@ -77,7 +92,8 @@ const gameBoard = (() => {
 
     return {
         getBoard,
-        checkWin
+        checkWin,
+        checkTie
     };
 })();
 
@@ -122,5 +138,5 @@ const player = (name, marker) => {
 const player1 = player('A', 'X');
 const player2 = player('B', 'O');
 
-console.log(gameBoard.checkWin(player1.getMarker()));
+console.log(gameBoard.checkTie(player1.getMarker()));
 displayController.renderDisplay(gameBoard.getBoard());
