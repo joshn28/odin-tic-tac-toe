@@ -21,10 +21,23 @@ const gameBoard = (() => {
 
         return win;
     };
+    const _threeInACol = (mark) => {
+        for (let i = 0; i < _board.length; i++) {
+            if (_board[0][i] === mark &&
+                _board[1][i] === mark &&
+                _board[2][i] === mark) {
+                    return true;
+            }
+        }
+
+        return false;
+    };
     let playerTurn = "X";
     const getBoard = () => _board;
     const checkWin = (mark) => {
         if (_threeInARow(mark)) {
+            return true;
+        } else if (_threeInACol(mark)) {
             return true;
         }
     }
