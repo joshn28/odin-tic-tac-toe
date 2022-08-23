@@ -4,7 +4,8 @@ html, body {
 }
 
 :root {
-    --grid-lines: 6px solid black
+    --grid-lines: 6px solid black;
+    font-size: 200px;
 }
 
 .container {
@@ -20,6 +21,12 @@ html, body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
+}
+
+.board div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .board div:first-of-type {
