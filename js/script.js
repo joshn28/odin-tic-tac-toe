@@ -46,7 +46,12 @@ const gameBoard = (() => {
 
         return false;
     };
-    let playerTurn = "X";
+    let playerTurn;
+    const setPlayerTurn = (mark) => {
+        if (!playerTurn) {
+            playerTurn = mark;
+        }
+    }
     const getBoard = () => _board;
     const checkWin = (mark) => {
         if (_threeInARow(mark)) {
@@ -80,8 +85,6 @@ const gameBoard = (() => {
 
             _board[rowNumber][colNumber] = playerTurn;
 
-            e.target.textContent = playerTurn;
-
             if (playerTurn === "X") {
                 playerTurn = "O";
             } else {
@@ -93,13 +96,21 @@ const gameBoard = (() => {
     return {
         getBoard,
         checkWin,
-        checkTie
+        checkTie,
+        setPlayerTurn
     };
 })();
 
 const displayController = (() => {
     'strict mode';
 
+    const _setColor = (mark) => {
+        if (mark === 'X') {
+            return 'red';
+        } else {
+            return 'blue';
+        }
+    };
     const renderDisplay = (board) => {
         for (let i = 0; i < displayBoard.children.length; i++) {
             const spot = displayBoard.children[i];
@@ -108,6 +119,7 @@ const displayController = (() => {
                 row.forEach((char, colIndex) => {
                     if (rowIndex === +spot.dataset.row &&
                         colIndex === +spot.dataset.column) {
+                            spot.style.color = _setColor(char);
                             spot.textContent = char;
                     } 
                 });
@@ -118,6 +130,10 @@ const displayController = (() => {
     return {
         renderDisplay
     };
+})();
+
+const gameController = (() => {
+    
 })();
 
 const player = (name, marker) => {
