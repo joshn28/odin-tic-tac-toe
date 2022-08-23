@@ -5,8 +5,8 @@ const gameBoard = (() => {
 
     const _board = [
         ['X', 'X', 'X'],
-        ['X', '', 'X'],
-        ['X', 'O', 'X']
+        ['X', 'X', 'X'],
+        ['', 'O', 'X']
     ];
     const _threeInARow = (mark) => {
         let win = false;
@@ -32,12 +32,28 @@ const gameBoard = (() => {
 
         return false;
     };
+    const _threeInADiag = (mark) => {
+        if (_board[0][2] === mark &&
+            _board[1][1] === mark &&
+            _board[2][0] === mark) {
+                return true;
+        } else if (
+            _board[0][0] === mark &&
+            _board[1][1] === mark &&
+            _board[2][2] === mark) {
+                return true;
+        }
+
+        return false;
+    };
     let playerTurn = "X";
     const getBoard = () => _board;
     const checkWin = (mark) => {
         if (_threeInARow(mark)) {
             return true;
         } else if (_threeInACol(mark)) {
+            return true;
+        } else if (_threeInADiag(mark)) {
             return true;
         }
     }
