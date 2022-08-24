@@ -99,6 +99,12 @@ const displayController = (() => {
                     if (rowIndex === +spot.dataset.row &&
                         colIndex === +spot.dataset.column) {
                             spot.textContent = char;
+
+                            if (char === 'X') {
+                                spot.style.color = 'red';
+                            } else if (char === 'O') {
+                                spot.style.color = 'blue';
+                            }
                     } 
                 });
             });
@@ -141,8 +147,22 @@ const game = (() => {
         }
     };
     const start = (board, display) => {
-        const player1 = player('A', 'X');
-        const player2 = player('B', 'O');
+        const player1Name = document.querySelector('#name1').value;
+        const player2Name = document.querySelector('#name2').value;
+        const dropdown = document.querySelector('#marker');
+        const player1Marker = dropdown.options[dropdown.selectedIndex].text;
+
+        document.querySelector('.players').classList.toggle('hidden');
+        document.querySelector('.container').classList.toggle('hidden');
+
+        let player1 = player(player1Name, player1Marker); 
+        let player2;
+
+        if (player1Marker === 'X') {
+            player2 = player(player2Name, 'O');
+        } else {
+            player2 = player(player2Name, 'X');
+        }
 
         _setPlayerTurn(player1);
 
@@ -155,10 +175,8 @@ const game = (() => {
 
                 if (!_checkGameState(board)) {
                     if (_playerTurn.getMarker() === player1.getMarker()) {
-                        e.target.style.color = 'red';
                         _playerTurn = player2;
                     } else {
-                        e.target.style.color = 'blue';
                         _playerTurn = player1;
                     }
         
@@ -173,4 +191,5 @@ const game = (() => {
     };
 })();
 
-game.start(gameBoard, displayController);
+const startBtn = document.querySelector('.game-start');
+startBtn.addEventListener('click', () => {game.start(gameBoard, displayController)});
