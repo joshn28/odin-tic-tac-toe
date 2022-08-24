@@ -1,12 +1,10 @@
-const displayBoard = document.querySelector('.board');
-
 const gameBoard = (() => {
     'strict mode';
 
     const _board = [
-        ['O', 'X', 'X'],
-        ['X', 'X', 'O'],
-        ['O', 'X', 'X']
+        ['', '', ''],
+        ['', '', ''],
+        ['', '', '']
     ];
     const _threeInARow = (mark) => {
         let win = false;
@@ -46,21 +44,23 @@ const gameBoard = (() => {
 
         return false;
     };
-    let playerTurn;
-    const setPlayerTurn = (mark) => {
-        if (!playerTurn) {
-            playerTurn = mark;
-        }
-    }
     const getBoard = () => _board;
-    const checkWin = (mark) => {
-        if (_threeInARow(mark)) {
+    const checkWin = () => {
+        if (_threeInARow('X')) {
             return true;
-        } else if (_threeInACol(mark)) {
+        } else if (_threeInACol('X')) {
             return true;
-        } else if (_threeInADiag(mark)) {
+        } else if (_threeInADiag('X')) {
+            return true;
+        } else if (_threeInARow('O')) {
+            return true;
+        } else if (_threeInACol('O')) {
+            return true;
+        } else if (_threeInADiag('O')) {
             return true;
         }
+
+        return false;
     };
     const checkTie = () => {
         let tie = true;
@@ -78,40 +78,19 @@ const gameBoard = (() => {
         return tie;
     };
 
-    document.addEventListener('click', function(e) {
-        if (!e.target.textContent) {
-            const rowNumber = e.target.dataset.row;
-            const colNumber = e.target.dataset.column;
-
-            _board[rowNumber][colNumber] = playerTurn;
-
-            if (playerTurn === "X") {
-                playerTurn = "O";
-            } else {
-                playerTurn = "X";
-            }
-        }
-    });
-
     return {
         getBoard,
         checkWin,
-        checkTie,
-        setPlayerTurn
+        checkTie
     };
 })();
 
 const displayController = (() => {
     'strict mode';
 
-    const _setColor = (mark) => {
-        if (mark === 'X') {
-            return 'red';
-        } else {
-            return 'blue';
-        }
-    };
     const renderDisplay = (board) => {
+        const displayBoard = document.querySelector('.board');
+
         for (let i = 0; i < displayBoard.children.length; i++) {
             const spot = displayBoard.children[i];
     
@@ -119,7 +98,6 @@ const displayController = (() => {
                 row.forEach((char, colIndex) => {
                     if (rowIndex === +spot.dataset.row &&
                         colIndex === +spot.dataset.column) {
-                            spot.style.color = _setColor(char);
                             spot.textContent = char;
                     } 
                 });
@@ -130,10 +108,6 @@ const displayController = (() => {
     return {
         renderDisplay
     };
-})();
-
-const gameController = (() => {
-    
 })();
 
 const player = (name, marker) => {
@@ -151,8 +125,52 @@ const player = (name, marker) => {
     };
 };
 
-const player1 = player('A', 'X');
-const player2 = player('B', 'O');
+const game = (() => {
+    let _playerTurn;
+    const _setPlayerTurn = (player) => {
+        if (!_playerTurn) {
+            _playerTurn = player;
+        }
+    };
+    const _checkGameState = (board) => {
+        if (board.checkWin()) {
+            console.log('Win');
+            console.log(_playerTurn.getMarker());
+        } else if (board.checkTie()) {
+            console.log('Tie');
+        }
+    };
+    const start = (board, display) => {
+        const player1 = player('A', 'X');
+        const player2 = player('B', 'O');
 
-console.log(gameBoard.checkTie(player1.getMarker()));
-displayController.renderDisplay(gameBoard.getBoard());
+        _setPlayerTurn(player1);
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.textContent && !board.checkTie() && !board.checkWin()) {
+                const rowNumber = e.target.dataset.row;
+                const colNumber = e.target.dataset.column;
+                
+                board.getBoard()[rowNumber][colNumber] = _playerTurn.getMarker();
+
+                if (!_checkGameState(board)) {
+                    if (_playerTurn.getMarker() === player1.getMarker()) {
+                        e.target.style.color = 'red';
+                        _playerTurn = player2;
+                    } else {
+                        e.target.style.color = 'blue';
+                        _playerTurn = player1;
+                    }
+        
+                    display.renderDisplay(board.getBoard());
+                }
+            }
+        });
+    };
+
+    return {
+        start
+    };
+})();
+
+game.start(gameBoard, displayController);
