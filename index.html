@@ -9,7 +9,30 @@
     <script src="./js/script.js" defer></script>
 </head>
 <body>
-    <div class="container">
+    <div class="players">
+        <form>
+            <div class="player1-name">
+                <label for="name1">Player 1 name:</label>
+                <input type="text" id="name1">
+            </div>
+            <div class="player2-name">
+                <label for="name2">Player 2 name:</label>
+                <input type="text" id="name2">
+            </div>
+            <div class="player-marker">
+                <label for="marker">Player 1's marker:</label>
+                <select name="player-mark" id="marker">
+                    <option value="">X</option>
+                    <option value="">O</option>
+                </select>
+            </div>
+            <div class="players-btn">
+                <button type="button" class="game-start">Start</button>
+            </div>
+        </form>
+    </div>
+    <div class="container hidden">
+        <span>X: 0 O: 0</span>
         <div class="board">
             <div data-row="0" data-column="0"></div>
             <div data-row="0" data-column="1"></div>
