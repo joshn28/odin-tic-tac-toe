@@ -32,6 +32,10 @@ html, body {
     align-items: center;
 }
 
+.board div:hover {
+    cursor: pointer;
+}
+
 .board div:first-of-type {
     border-right: var(--grid-lines);
     border-bottom: var(--grid-lines);
