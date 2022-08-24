@@ -8,15 +8,89 @@ html, body {
 :root {
     --grid-lines: 6px solid black;
     font-family: 'Inter', sans-serif;
-    font-size: 120px;
 }
 
-.container {
+/* Player Form */
+
+.players {
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: content-box url('../img/ttt-background.png');
+    font-size: 18px;
 }
+
+.players form {
+    width: 250px;
+    height: 350px;
+    padding: 20px 100px;
+    border: 2px solid black;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.player1-name,
+.player2-name {
+    display: flex;
+    flex-direction: column;
+}
+
+.player1-name label,
+.player2-name label {
+    margin-bottom: 10px;
+}
+
+.player1-name input,
+.player2-name input {
+    appearance: none;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 10px 0;
+    padding-left: 10px;
+    font-size: 0.9em;
+}
+
+.player-marker {
+    display: flex;
+    justify-content: space-between;
+}
+
+.players-btn {
+    margin: 0 auto;
+}
+
+.players-btn button {
+    background: none;
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 0.9em;
+}
+
+.players-btn button:hover {
+    cursor: pointer;
+}
+
+.container {
+    font-size: 120px;
+    height: 100vh;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.container h1 {
+    font-size: 0.8rem;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Game Board */
 
 .board {
     width: 600px;
