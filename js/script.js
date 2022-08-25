@@ -116,8 +116,11 @@ const displayController = (() => {
         if (state === 'w') {
             const displayMsg = player.getName() + ' wins!';
             message.textContent = displayMsg;
-        } else {
+        } else if (state === 't') {
             const displayMsg = 'Tie!';
+            message.textContent = displayMsg;
+        } else {
+            const displayMsg = `${player.getName()}'s turn`;
             message.textContent = displayMsg;
         }
     };
@@ -186,11 +189,28 @@ const game = (() => {
 
             display.renderMessage(_playerTurn, 'w');
             display.renderScore(firstPlayer, secondPlayer);
+
+            return 'w';
         } else if (board.checkTie()) {
-            console.log('Tie');
             display.renderMessage(_playerTurn, 't');
             display.renderScore(firstPlayer, secondPlayer);
+
+            return 't';
         }
+    };
+    const _restart = (board, display) => {
+        const restartBtn = document.querySelector('.restart-btn');
+
+        restartBtn.addEventListener('click', () => {
+            board.forEach(row => {
+                row.forEach((mark, i) => {
+                    row[i] = '';
+                });
+            });
+            
+            display.renderMessage(_playerTurn, '');
+            display.renderBoard(board);
+        });
     };
     const start = (board, display) => {
         const player1Name = document.querySelector('#name1').value;
@@ -212,6 +232,8 @@ const game = (() => {
 
         _setPlayerTurn(player1);
 
+        display.renderMessage(_playerTurn, '');
+
         document.addEventListener('click', (e) => {
             if (!e.target.textContent && !board.checkTie() && !board.checkWin()) {
                 const rowNumber = e.target.dataset.row;
@@ -225,14 +247,14 @@ const game = (() => {
                     } else {
                         _playerTurn = player1;
                     }
-        
-                    display.renderBoard(board.getBoard());
+                    display.renderMessage(_playerTurn, '');
                 }
+
+                display.renderBoard(board.getBoard());
             }
         });
-    };
-    const restart = () => {
 
+        _restart(board.getBoard(), display);
     };
 
     return {
