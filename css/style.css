@@ -48,10 +48,15 @@ html, body {
 .player2-name input {
     appearance: none;
     border: 1px solid black;
-    border-radius: 20px;
+    border-radius: 5px;
     padding: 10px 0;
     padding-left: 10px;
     font-size: 0.9em;
+}
+
+.player1-name input.error,
+.player2-name input.error {
+    border: 1px solid red;
 }
 
 .player-marker {
@@ -79,6 +84,16 @@ html, body {
 
 .players-btn button:hover {
     cursor: pointer;
+}
+
+.not-visible {
+    visibility: hidden;
+}
+
+span.error {
+    color: red;
+    font-size: 0.6em;
+    margin-top: 3px;
 }
 
 .container {

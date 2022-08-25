@@ -235,4 +235,41 @@ const game = (() => {
 })();
 
 const startBtn = document.querySelector('.game-start');
-startBtn.addEventListener('click', () => {game.start(gameBoard, displayController)});
+startBtn.addEventListener('click', () => {
+    const player1 = document.querySelector('#name1');
+    const player2 = document.querySelector('#name2');
+
+    if (player1.value && player2.value) {
+        game.start(gameBoard, displayController)
+    } else {
+        const spans = document.querySelectorAll('.error.not-visible');
+
+        if (!player1.value) {
+            player1.classList.add('error');
+            spans[0].classList.remove('not-visible');
+
+            player1.addEventListener('input', (e) => {
+                const input = e.target.value;
+
+                if (input) {
+                    player1.classList.remove('error');
+                    spans[0].classList.add('not-visible');
+                }
+            });
+        }
+        
+        if (!player2.value) {
+            player2.classList.add('error');
+            spans[1].classList.remove('not-visible');
+
+            player2.addEventListener('input', (e) => {
+                const input = e.target.value;
+
+                if (input) {
+                    player2.classList.remove('error');
+                    spans[1].classList.add('not-visible');
+                }
+            });
+        }
+    }
+});
