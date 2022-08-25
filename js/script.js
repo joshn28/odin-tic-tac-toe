@@ -218,7 +218,8 @@ const game = (() => {
         const dropdown = document.querySelector('#marker');
         const player1Marker = dropdown.options[dropdown.selectedIndex].text;
 
-        document.querySelector('.players').classList.toggle('hidden');
+        $('.players').slideUp(1000);
+        
         document.querySelector('.container').classList.toggle('hidden');
 
         let player1 = player(player1Name, player1Marker); 
