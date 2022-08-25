@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
 html, body {
     padding: 0;
@@ -59,6 +59,10 @@ html, body {
     justify-content: space-between;
 }
 
+.player-marker select {
+    border: 1px solid black;
+}
+
 .players-btn {
     margin: 0 auto;
 }
@@ -68,6 +72,9 @@ html, body {
     border-radius: 30px;
     padding: 10px 20px;
     font-size: 0.9em;
+    color: white;
+    background-color: black;
+    font-weight: bold;
 }
 
 .players-btn button:hover {
@@ -144,4 +151,24 @@ html, body {
 .board div:last-of-type {
     border-left: var(--grid-lines);
     border-top: var(--grid-lines);
+}
+
+/* Scoreboard */
+
+.scoreboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.display-msg {
+    font-size: 0.7em;
+}
+
+.x-red {
+    color:  red;
+}
+
+.o-blue {
+    color: blue;
 }
