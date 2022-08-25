@@ -72,10 +72,13 @@ html, body {
 }
 
 .players-btn button {
+    display: flex;
+    align-items: center;
+    border: none;
     background: none;
-    border-radius: 30px;
-    padding: 10px 20px;
-    font-size: 0.9em;
+    border-radius: 10px;
+    padding: 10px 15px;
+    font-size: 1.1em;
     color: white;
     background-color: black;
     font-weight: bold;
