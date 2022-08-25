@@ -6,7 +6,6 @@ html, body {
 }
 
 :root {
-    --grid-lines: 6px solid black;
     font-family: 'Inter', sans-serif;
 }
 
@@ -123,52 +122,19 @@ span.error {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
+    background-color: black;
+    gap: 6px;
 }
 
 .board div {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: white;
 }
 
 .board div:hover {
     cursor: pointer;
-}
-
-.board div:first-of-type {
-    border-right: var(--grid-lines);
-    border-bottom: var(--grid-lines);
-}
-
-.board div:nth-of-type(2) {
-    border-bottom: var(--grid-lines);
-}
-
-.board div:nth-of-type(3) {
-    border-left: var(--grid-lines);
-    border-bottom: var(--grid-lines);
-}
-
-.board div:nth-of-type(4) {
-    border-right: var(--grid-lines);
-}
-
-.board div:nth-of-type(6) {
-    border-left: var(--grid-lines);
-}
-
-.board div:nth-of-type(7) {
-    border-top: var(--grid-lines);
-    border-right: var(--grid-lines);
-}
-
-.board div:nth-of-type(8) {
-    border-top: var(--grid-lines);
-}
-
-.board div:last-of-type {
-    border-left: var(--grid-lines);
-    border-top: var(--grid-lines);
 }
 
 /* Scoreboard */
