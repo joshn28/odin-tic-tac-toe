@@ -88,7 +88,7 @@ const gameBoard = (() => {
 const displayController = (() => {
     'strict mode';
 
-    const renderDisplay = (board) => {
+    const renderBoard = (board) => {
         const displayBoard = document.querySelector('.board');
 
         for (let i = 0; i < displayBoard.children.length; i++) {
@@ -110,9 +110,48 @@ const displayController = (() => {
             });
         }
     };
+    const renderMessage = (player, state) => {
+        const message = document.querySelector('.display-msg');
+
+        if (state === 'w') {
+            const displayMsg = player.getName() + ' wins!';
+            message.textContent = displayMsg;
+        } else {
+            const displayMsg = 'Tie!';
+            message.textContent = displayMsg;
+        }
+    };
+    const renderScore = (firstPlayer, secondPlayer) => {
+        const numberOfWins = {};
+        numberOfWins[firstPlayer.getMarker()] = firstPlayer.getNumberOfWins();
+        numberOfWins[secondPlayer.getMarker()] = secondPlayer.getNumberOfWins();
+
+        const scoreboard = document.querySelector('.scoreboard');
+        const scoreMsg = document.querySelector('.wins');
+        scoreboard.removeChild(scoreMsg);
+
+        const newScoreMsg = document.createElement('p');
+        newScoreMsg.classList.toggle('wins');
+
+        const xWins = document.createElement('span');
+        xWins.classList.toggle('x-red');
+        xWins.textContent = "X";
+
+        const oWins = document.createElement('span');
+        oWins.classList.toggle('o-blue');
+        oWins.textContent = "O";
+
+        newScoreMsg.appendChild(xWins);
+        newScoreMsg.innerHTML += ': ' + numberOfWins['X'] + ' ';
+        newScoreMsg.appendChild(oWins);
+        newScoreMsg.innerHTML += ': ' + numberOfWins['O'];
+        scoreboard.appendChild(newScoreMsg);
+    };
 
     return {
-        renderDisplay
+        renderBoard,
+        renderScore,
+        renderMessage
     };
 })();
 
@@ -138,12 +177,16 @@ const game = (() => {
             _playerTurn = player;
         }
     };
-    const _checkGameState = (board) => {
+    const _checkGameState = (board, display, firstPlayer, secondPlayer) => {
         if (board.checkWin()) {
-            console.log('Win');
-            console.log(_playerTurn.getMarker());
+            _playerTurn.addWin();
+
+            display.renderMessage(_playerTurn, 'w');
+            display.renderScore(firstPlayer, secondPlayer);
         } else if (board.checkTie()) {
             console.log('Tie');
+            display.renderMessage(_playerTurn, 't');
+            display.renderScore(firstPlayer, secondPlayer);
         }
     };
     const start = (board, display) => {
@@ -173,14 +216,14 @@ const game = (() => {
                 
                 board.getBoard()[rowNumber][colNumber] = _playerTurn.getMarker();
 
-                if (!_checkGameState(board)) {
+                if (!_checkGameState(board, display, player1, player2)) {
                     if (_playerTurn.getMarker() === player1.getMarker()) {
                         _playerTurn = player2;
                     } else {
                         _playerTurn = player1;
                     }
         
-                    display.renderDisplay(board.getBoard());
+                    display.renderBoard(board.getBoard());
                 }
             }
         });
