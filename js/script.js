@@ -126,12 +126,16 @@ const displayController = (() => {
         numberOfWins[firstPlayer.getMarker()] = firstPlayer.getNumberOfWins();
         numberOfWins[secondPlayer.getMarker()] = secondPlayer.getNumberOfWins();
 
-        const scoreboard = document.querySelector('.scoreboard');
-        const scoreMsg = document.querySelector('.wins');
-        scoreboard.removeChild(scoreMsg);
+        const xScore = document.querySelector('.x-wins');
+        const oScore = document.querySelector('.o-wins');
 
-        const newScoreMsg = document.createElement('p');
-        newScoreMsg.classList.toggle('wins');
+        while (xScore.firstChild) {
+            xScore.removeChild(xScore.firstChild);
+        }
+
+        while (oScore.firstChild) {
+            oScore.removeChild(oScore.firstChild);
+        }
 
         const xWins = document.createElement('span');
         xWins.classList.toggle('x-red');
@@ -141,11 +145,10 @@ const displayController = (() => {
         oWins.classList.toggle('o-blue');
         oWins.textContent = "O";
 
-        newScoreMsg.appendChild(xWins);
-        newScoreMsg.innerHTML += ': ' + numberOfWins['X'] + ' ';
-        newScoreMsg.appendChild(oWins);
-        newScoreMsg.innerHTML += ': ' + numberOfWins['O'];
-        scoreboard.appendChild(newScoreMsg);
+        xScore.appendChild(xWins);
+        xScore.innerHTML += ': ' + numberOfWins['X'];
+        oScore.appendChild(oWins);
+        oScore.innerHTML += ': ' + numberOfWins['O'];
     };
 
     return {

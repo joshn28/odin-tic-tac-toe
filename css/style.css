@@ -99,8 +99,8 @@ span.error {
 .container {
     font-size: 120px;
     height: 100vh;
-    display: flex;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
 }
 
