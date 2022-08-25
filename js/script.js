@@ -231,6 +231,9 @@ const game = (() => {
             }
         });
     };
+    const restart = () => {
+
+    };
 
     return {
         start
@@ -247,32 +250,23 @@ startBtn.addEventListener('click', () => {
     } else {
         const spans = document.querySelectorAll('.error.not-visible');
 
-        if (!player1.value) {
-            player1.classList.add('error');
-            spans[0].classList.remove('not-visible');
-
-            player1.addEventListener('input', (e) => {
-                const input = e.target.value;
-
-                if (input) {
-                    player1.classList.remove('error');
-                    spans[0].classList.add('not-visible');
-                }
-            });
+        function checkPlayerName(player, i) {
+            if (!player.value) {
+                player.classList.add('error');
+                spans[i].classList.remove('not-visible');
+    
+                player.addEventListener('input', (e) => {
+                    const input = e.target.value;
+    
+                    if (input) {
+                        player.classList.remove('error');
+                        spans[i].classList.add('not-visible');
+                    }
+                });
+            }
         }
         
-        if (!player2.value) {
-            player2.classList.add('error');
-            spans[1].classList.remove('not-visible');
-
-            player2.addEventListener('input', (e) => {
-                const input = e.target.value;
-
-                if (input) {
-                    player2.classList.remove('error');
-                    spans[1].classList.add('not-visible');
-                }
-            });
-        }
+        checkPlayerName(player1, 0);
+        checkPlayerName(player2, 1);
     }
 });
